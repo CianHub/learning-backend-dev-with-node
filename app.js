@@ -13,5 +13,4 @@ app.use((req, res, next) => {
   res.send('Hello World');
 });
 
-const server = http.createServer(app);
-server.listen(3000);
+app.listen(3000);
