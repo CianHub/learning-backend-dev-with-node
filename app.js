@@ -1,4 +1,3 @@
-const http = require('http');
 const express = require('express');
 
 const app = express();
@@ -15,7 +14,7 @@ app.use('/', (req, res, next) => {
 
 app.use('/', (req, res, next) => {
   console.log('Middleware 2');
-  res.send('<h1>Hello World</h1>');
+  res.send('Hello World');
 });
 
 app.listen(3000);
