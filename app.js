@@ -1,19 +1,26 @@
 const express = require('express');
+const bodyparser = require('body-parser');
 
 const app = express();
 
-app.use('/egg', (req, res, next) => {
-  console.log('Middleware 3');
-  res.send('<h1>I am an egg</h1>');
+app.use(bodyparser.urlencoded({ extended: false }));
+
+app.use('/add-user', (req, res, next) => {
+  res.send(
+    '<form method="POST" action="/users"><input type="text" name="title"/><button type="submit">Add User </button>'
+  );
+});
+
+app.use('/users', (req, res, next) => {
+  console.log(req.body.title);
+  res.redirect('/');
 });
 
 app.use('/', (req, res, next) => {
-  console.log('Middleware 1');
   next();
 });
 
 app.use('/', (req, res, next) => {
-  console.log('Middleware 2');
   res.send('Hello World');
 });
 
