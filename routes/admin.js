@@ -2,9 +2,9 @@ const express = require('express');
 
 const router = express.Router();
 
-router.use('/add-user', (req, res, next) => {
+router.get('/add-user', (req, res, next) => {
   res.send(
-    '<form method="POST" action="/users"><input type="text" name="title"/><button type="submit">Add User </button>'
+    '<form method="POST" action="/admin/users"><input type="text" name="title"/><button type="submit">Add User </button>'
   );
 });
 
