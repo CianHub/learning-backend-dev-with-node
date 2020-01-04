@@ -7,8 +7,12 @@ const router = express.Router();
 
 router.use(bodyparser.urlencoded({ extended: false }));
 
-router.get('/add-user', (req, res, next) => {
-  res.sendFile(path.join(rootDir, 'views', 'add-user.html'));
+router.get('/add-product', (req, res, next) => {
+  res.sendFile(path.join(rootDir, 'views', 'add-product.html'));
+});
+
+router.post('/add-product', (req, res, next) => {
+  res.redirect('/');
 });
 
 module.exports = router;
