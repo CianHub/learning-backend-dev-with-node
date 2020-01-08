@@ -2,9 +2,9 @@ const fs = require('fs');
 const path = require('path');
 const pathUtil = require('../util/path');
 const products = [];
+const p = path.join(pathUtil, 'data', 'products');
 
 const getProductsFromFile = callback => {
-  const p = path.join(pathUtil, 'data', 'products');
   fs.readFile(p, (err, data) => {
     if (err) {
       return callback([]);
