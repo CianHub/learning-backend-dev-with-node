@@ -23,6 +23,7 @@ module.exports = class Product {
   }
 
   static fetchAll(callback) {
+    const p = path.join(pathUtil, 'data', 'products');
     fs.readFile(p, (err, data) => {
       if (err) {
         callback([]);
