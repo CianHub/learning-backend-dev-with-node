@@ -1,12 +1,11 @@
 const Product = require('../models/product');
 
-exports.getProductList = (req, res, next) => {
+exports.getProducts = (req, res, next) => {
   Product.fetchAll(products => {
     res.render('shop/product-list', {
-      title: 'Products ',
       prods: products,
-      path: '/product-list',
-      passProducts: products.length > 0
+      pageTitle: 'All Products',
+      path: '/products'
     });
   });
 };
@@ -14,25 +13,30 @@ exports.getProductList = (req, res, next) => {
 exports.getIndex = (req, res, next) => {
   Product.fetchAll(products => {
     res.render('shop/index', {
-      title: 'Home ',
       prods: products,
+      pageTitle: 'Shop',
       path: '/'
     });
   });
 };
 
 exports.getCart = (req, res, next) => {
-  Product.fetchAll(products => {
-    res.render('shop/cart', {
-      title: 'Your Cart',
-      path: '/cart'
-    });
+  res.render('shop/cart', {
+    path: '/cart',
+    pageTitle: 'Your Cart'
+  });
+};
+
+exports.getOrders = (req, res, next) => {
+  res.render('shop/orders', {
+    path: '/orders',
+    pageTitle: 'Your Orders'
   });
 };
 
 exports.getCheckout = (req, res, next) => {
   res.render('shop/checkout', {
-    title: 'Checkout',
-    path: '/checkout'
+    path: '/checkout',
+    pageTitle: 'Checkout'
   });
 };
