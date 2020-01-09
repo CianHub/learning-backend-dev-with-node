@@ -7,8 +7,10 @@ const router = express.Router();
 
 router.use(bodyparser.urlencoded({ extended: false }));
 
-router.get('/add-product', productsController.getAddProduct);
+router.get('/admin/add-product', productsController.getAddProduct);
 
-router.post('/add-product', productsController.postAddProduct);
+router.post('/admin/add-product', productsController.postAddProduct);
+
+router.get('/admin/product-list', productsController.getProducts);
 
 module.exports = router;
