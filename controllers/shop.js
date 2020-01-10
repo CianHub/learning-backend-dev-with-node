@@ -15,7 +15,7 @@ exports.getProductDetail = (req, res, next) => {
     res.render('shop/product-detail', {
       product: product,
       pageTitle: product.title,
-      path: '/products/:id'
+      path: '/products'
     });
   });
 };
