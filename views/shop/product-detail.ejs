@@ -1,9 +1,14 @@
 <%- include('../includes/head.ejs') %>
-    <link rel="stylesheet" href="/css/product.css">
-    </head>
+<link rel="stylesheet" href="/css/product.css">
+</head>
 
-    <body>
+<body>
         <%- include('../includes/navigation.ejs') %>
-<p><%= product.description %></p>
-            
-            <%- include('../includes/end.ejs') %>
+        <main>
+                <%= product.title %>
+                <hr>
+                <div><img src="<%= product.imageUrl %>" alt="<%= product.title %>"></div>
+                <h2><%= product.price %></h2>
+                <p><%= product.description %></p>
+        </main>
+        <%- include('../includes/end.ejs') %>
