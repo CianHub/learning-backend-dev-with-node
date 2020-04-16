@@ -13,13 +13,13 @@ exports.postAddProduct = (req, res, next) => {
   const imageURL = req.body.imageURL;
   const price = req.body.price;
   const description = req.body.description;
-
-  Product.create({
-    title: title,
-    price: price,
-    description: description,
-    imageURL: imageURL,
-  })
+  req.user
+    .createProduct({
+      title: title,
+      price: price,
+      description: description,
+      imageURL: imageURL,
+    })
     .then((result) => console.log(result))
     .catch((err) => console.log(err));
 };
