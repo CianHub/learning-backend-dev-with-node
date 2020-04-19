@@ -10,7 +10,7 @@ const User = require('./models/user');
 const Cart = require('./models/cart');
 const CartItem = require('./models/cart-item');
 const Order = require('./models/order');
-const OrderItem = require('./models/order');
+const OrderItem = require('./models/order-item');
 
 const app = express();
 
@@ -24,7 +24,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use((req, res, next) => {
-  User.findByPk(2)
+  User.findByPk(1)
     .then((user) => {
       req.user = user;
       next();
@@ -48,9 +48,9 @@ User.hasMany(Order);
 Order.belongsToMany(Product, { through: OrderItem });
 
 sequelize
-  .sync({})
+  .sync()
   .then((result) => {
-    User.findByPk(2);
+    User.findByPk(1);
   })
   .then((user) => {
     if (!user) {

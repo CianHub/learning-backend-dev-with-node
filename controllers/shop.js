@@ -129,9 +129,10 @@ exports.postOrder = (req, res, next) => {
       return req.user
         .createOrder()
         .then((order) => {
+          console.log(JSON.stringify(products));
           order.addProducts(
             products.map((product) => {
-              product.orderItem.quantity = {
+              product.orderItem = {
                 quantity: product.cartItem.quantity,
               };
               return product;
@@ -150,15 +151,15 @@ exports.postOrder = (req, res, next) => {
 };
 
 exports.getOrders = (req, res, next) => {
-  res.render('shop/orders', {
-    path: '/orders',
-    pageTitle: 'Your Orders',
-  });
-};
-
-exports.getCheckout = (req, res, next) => {
-  res.render('shop/checkout', {
-    path: '/checkout',
-    pageTitle: 'Checkout',
-  });
+  req.user
+    .getOrders({ include: ['products'] })
+    .then((orders) => {
+      //console.log(orders);
+      res.render('shop/orders', {
+        path: '/orders',
+        pageTitle: 'Your Orders',
+        orders: orders,
+      });
+    })
+    .catch((err) => console.log(err));
 };
