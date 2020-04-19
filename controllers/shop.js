@@ -91,15 +91,25 @@ exports.postCart = (req, res, next) => {
 
 exports.postCartDeleteProduct = (req, res, next) => {
   const prodId = req.body.productId;
+  let fetchedCart;
   req.user
     .getCart()
     .then((cart) => {
+      fetchedCart = cart;
       return cart.getProducts({ where: { id: prodId } });
     })
     .then((products) => {
       let product = products[0];
       if (product) {
-        return product.cartItem.destroy();
+        if (product.cartItem.quantity < 2) {
+          return product.cartItem.destroy();
+        }
+
+        const oldQuantity = product.cartItem.quantity;
+        newQuantity = oldQuantity - 1;
+        return fetchedCart.addProduct(product, {
+          through: { quantity: newQuantity },
+        });
       }
     })
     .then((result) => {
