@@ -22,7 +22,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use((req, res, next) => {
-  User.findByPk(1)
+  User.findByPk(2)
     .then((user) => {
       req.user = user;
       next();
@@ -45,7 +45,7 @@ Product.belongsToMany(Cart, { through: CartItem });
 sequelize
   .sync()
   .then((result) => {
-    User.findByPk(1);
+    User.findByPk(2);
   })
   .then((user) => {
     if (!user) {
