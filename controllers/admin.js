@@ -19,15 +19,13 @@ exports.postAddProduct = (req, res, next) => {
     .catch((err) => console.log(err));
 };
 
-/*exports.getEditProduct = (req, res, next) => {
+exports.getEditProduct = (req, res, next) => {
   const editMode = req.query.edit;
   if (!editMode) {
     return res.redirect('/');
   }
   const prodId = req.params.productId;
-  req.user
-    .getProducts({ where: { id: prodId } })
-    //Product.findByPk(prodId)
+  Product.fetchByID(prodId)
     .then((product) => {
       if (!product) {
         return res.redirect('/');
@@ -49,24 +47,26 @@ exports.postEditProduct = (req, res, next) => {
   const updatedImageURL = req.body.imageURL;
   const updatedDesc = req.body.description;
 
-  Product.findByPk(prodId)
+  Product.fetchByID(prodId)
     .then((result) => {
-      result.title = updatedTitle;
-      result.imageURL = updatedImageURL;
-      result.description = updatedDesc;
-      result.price = updatedPrice;
-      return result.save();
+      const prod = new Product(
+        updatedTitle,
+        updatedPrice,
+        updatedImageURL,
+        updatedDesc,
+        prodId
+      );
+      return prod.save();
     })
     .then(() => {
       res.redirect('/admin/products');
     })
     .catch((err) => console.log(err));
 };
-*/
+
 exports.getProducts = (req, res, next) => {
   Product.fetchAll()
     .then((products) => {
-      console.log(products);
       res.render('admin/products', {
         prods: products,
         pageTitle: 'Admin Products',
