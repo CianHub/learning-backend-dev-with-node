@@ -23,10 +23,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use((req, res, next) => {
   User.fetchUserByID(`${process.env.USERID}`)
     .then((user) => {
+      console.log(user);
       req.user = user;
+      next();
     })
     .catch((err) => console.log(err));
-  next();
 });
 
 app.use('/admin', adminRoutes);
