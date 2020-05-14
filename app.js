@@ -23,8 +23,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use((req, res, next) => {
   User.fetchUserByID(`${process.env.USERID}`)
     .then((user) => {
-      console.log(user);
-      req.user = user;
+      req.user = new User(user.email, user.name, user.cart, user._id);
       next();
     })
     .catch((err) => console.log(err));
