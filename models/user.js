@@ -19,13 +19,28 @@ class User {
   }
 
   addToCart(product) {
-    /*const cartProductIndex = this.cart.items.findIndex((cartProduct) => {
-      return cartProduct._id === product._id;
-    });*/
+    // If not -1 than product is already in cart
+    const cartProductIndex = this.cart.items.findIndex((cartProduct) => {
+      return cartProduct.productId.toString() === product._id.toString();
+    });
 
+    let newQuantity = 1;
+    const updatedCartItems = [...this.cart.items]; // clone existing cart
+
+    if (cartProductIndex >= 0) {
+      // if product exists
+      newQuantity = this.cart.items[cartProductIndex].quantity + 1; // get new quantity
+      updatedCartItems[cartProductIndex].quantity = newQuantity; // increase quantity in cart
+    } else {
+      // if new product
+      updatedCartItems.push({
+        productId: ObjectId(product._id),
+        quantity: newQuantity,
+      }); // adds product to cart with quantity of 1
+    }
     const updatedCart = {
-      items: [{ productId: ObjectId(product._id), quantity: 1 }],
-    };
+      items: updatedCartItems,
+    }; // new cart to save to db
     const db = getDB();
     return db
       .collection('users')
