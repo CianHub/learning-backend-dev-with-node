@@ -47,6 +47,31 @@ class User {
       .updateOne({ _id: ObjectId(this._id) }, { $set: { cart: updatedCart } });
   }
 
+  deleteCartItem(prodId) {
+    const cartProductIndex = this.cart.items.findIndex((cartProduct) => {
+      return cartProduct.productId.toString() === prodId.toString();
+    });
+
+    let newQuantity = 1;
+    let updatedCartItems = [...this.cart.items]; // clone existing cart
+
+    if (cartProductIndex >= 0) {
+      // if product exists
+      newQuantity = this.cart.items[cartProductIndex].quantity - 1; // get new quantity
+      updatedCartItems[cartProductIndex].quantity = newQuantity; // increase quantity in cart
+      if (newQuantity === 0) {
+        updatedCartItems.splice(cartProductIndex, 1);
+      }
+    }
+    const updatedCart = {
+      items: updatedCartItems,
+    }; // new cart to save to db
+    const db = getDB();
+    return db
+      .collection('users')
+      .updateOne({ _id: ObjectId(this._id) }, { $set: { cart: updatedCart } });
+  }
+
   getCart() {
     const db = getDB();
     const productIDs = this.cart.items.map((product) => {
@@ -68,6 +93,22 @@ class User {
         })
       )
       .catch((err) => console.log(err));
+  }
+
+  addOrder() {
+    const db = getDB();
+    return db
+      .collection('orders')
+      .insertOne({ ...this.cart })
+      .then(() => {
+        this.cart = { items: [] };
+        return db
+          .collection('users')
+          .updateOne(
+            { _id: ObjectId(this._id) },
+            { $set: { cart: { items: [] } } }
+          );
+      });
   }
 
   static fetchUserByID(id) {
