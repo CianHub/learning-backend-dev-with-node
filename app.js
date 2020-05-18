@@ -21,13 +21,9 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use((req, res, next) => {
-  User.findOne()
+  User.findById(`${process.env.USERID}`)
     .then((user) => {
-      req.user = new User({
-        email: user.email,
-        name: user.name,
-        cart: user.cart,
-      });
+      req.user = user;
       next();
     })
     .catch((err) => console.log(err));
