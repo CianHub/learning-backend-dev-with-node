@@ -1,4 +1,4 @@
-const ObjectId = require('mongodb').ObjectId;
+/*const ObjectId = require('mongodb').ObjectId;
 const getDB = require('../util/database').getDB;
 
 class Product {
@@ -65,4 +65,4 @@ class Product {
   }
 }
 
-module.exports = Product;
+module.exports = Product;*/
