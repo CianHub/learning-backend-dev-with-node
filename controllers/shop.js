@@ -2,7 +2,7 @@ const Product = require('../models/product');
 
 exports.getProducts = (req, res, next) => {
   Product.find()
-    .populate('userId')
+    //.populate('userId') Will populate related data
     .then((products) => {
       res.render('shop/product-list', {
         prods: products,
