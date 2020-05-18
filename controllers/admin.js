@@ -48,14 +48,12 @@ exports.getEditProduct = (req, res, next) => {
 };
 
 exports.postEditProduct = (req, res, next) =>
-  new Product(
-    req.body.title,
-    req.body.price,
-    req.body.imageURL,
-    req.body.description,
-    req.body.productId
-  )
-    .save()
+  Product.findOneAndUpdate(req.body.productId, {
+    title: req.body.title,
+    description: req.body.description,
+    imageURL: req.body.imageURL,
+    price: req.body.price,
+  })
     .then(() => {
       res.redirect('/admin/products');
     })
